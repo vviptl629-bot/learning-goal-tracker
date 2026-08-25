@@ -333,15 +333,18 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
           <div id="ghForm">
             <label class="gh-label">GitHub Token<span class="gh-hint">（需 gist 权限）</span></label>
             <input class="gh-input" type="password" id="syncToken" placeholder="ghp_xxx 或 github_pat_xxx" autocomplete="off">
-            <label class="gh-label" style="margin-top:12px">Gist ID<span class="gh-hint">（可留空，首次同步自动创建私有 Gist）</span></label>
+            <label class="gh-label" style="margin-top:12px">Gist ID<span class="gh-hint">（⚠️ 留空会新建空 Gist 导致数据丢失，已有数据请填 7ec9f787e805e01e453a849e91a97d9b）</span></label>
             <input class="gh-input" type="text" id="syncGistId" placeholder="留空则自动新建">
             <button class="btn btn-block gh-btn" style="margin-top:14px" onclick="syncEnable()" id="ghBtnConnect">启用并同步</button>
           </div>
           <div id="ghConnected" style="display:none">
             <div class="gh-status-row"><span class="dot" id="ghDot" style="width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block"></span><span id="ghStatusText">已连接</span></div>
             <div class="gh-stats" id="ghStats"></div>
+            <label class="gh-label" style="margin-top:12px">Gist ID（改绑/恢复用）</label>
+            <input class="gh-input" type="text" id="syncGistIdConn" placeholder="粘贴你的 Gist ID 后点「强制恢复」">
             <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn btn-outline btn-sm" onclick="syncNow()">立即同步</button>
+              <button class="btn btn-primary btn-sm" onclick="forceRestore()">🔄 强制从云端恢复</button>
               <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="syncDisable()">断开连接</button>
             </div>
             <div id="syncGistInfo" class="sync-gist" style="margin-top:10px"></div>
@@ -936,6 +939,32 @@ function syncDisable(){
   sync.enabled=false;sync.token='';sync.gistId='';saveSyncCfg();
   showFormUI();toast('已断开云端同步','ok');
 }
+/* 强制从云端恢复：用 Gist 数据整体覆盖本地（解决本地为空/绑错 Gist 导致空白） */
+async function forceRestore(){
+  if(!sync.enabled||!sync.token){syncStatus('请先在上方填入 Token 并启用','err');return;}
+  var gidEl=document.getElementById('syncGistIdConn');
+  var gid=(gidEl&&gidEl.value.trim())||sync.gistId;
+  if(!gid){syncStatus('请先填写 Gist ID','err');return;}
+  sync.gistId=gid;saveSyncCfg();
+  syncStatus('正在从云端强制恢复…');
+  try{
+    var g=await gistReq('GET',sync.gistId);
+    var f=g.files&&g.files[SYNC_FILE];
+    if(!f||!f.content){syncStatus('该 Gist 为空，无可恢复数据','warn');return;}
+    var d=JSON.parse(f.content);
+    var inc=d.state||d;
+    state.goals=Array.isArray(inc.goals)?inc.goals:[];
+    state.records=Array.isArray(inc.records)?inc.records:[];
+    state.weeklyNotes=(inc.weeklyNotes&&typeof inc.weeklyNotes==='object')?inc.weeklyNotes:{};
+    state.journal=Array.isArray(inc.journal)?inc.journal:[];
+    await saveDataAsync();
+    renderAll();showGistInfo();
+    syncStatus('✅ 已恢复 '+state.goals.length+' 个目标 / '+state.records.length+' 条记录','ok');
+    toast('恢复成功 ✅','ok');
+  }catch(e){
+    syncStatus('恢复失败：'+(e&&e.message?e.message:e),'err');
+  }
+}
 function showFormUI(){
   var f=document.getElementById('ghForm'),c=document.getElementById('ghConnected');
   if(f)f.style.display='';if(c)c.style.display='none';
@@ -944,6 +973,8 @@ function showFormUI(){
 function showConnectedUI(){
   var f=document.getElementById('ghForm'),c=document.getElementById('ghConnected');
   if(f)f.style.display='none';if(c)c.style.display='';
+  var gidConn=document.getElementById('syncGistIdConn');
+  if(gidConn)gidConn.value=sync.gistId||'';
   showGistInfo();renderMine();
 }
 function syncInit(){

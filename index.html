@@ -863,6 +863,8 @@ async function pushSync(){
   if(!sync.enabled||!sync.token)return;
   try{
     var body=syncPayload();
+    var _empty=!state.goals.length&&!state.records.length&&!state.journal.length&&!(state.weeklyNotes&&Object.keys(state.weeklyNotes).length);
+    if(sync.gistId&&_empty){await pullSync(true);if(!state.goals.length&&!state.records.length&&!state.journal.length&&!(state.weeklyNotes&&Object.keys(state.weeklyNotes).length)){syncStatus('本地与云端皆为空，已跳过上传','ok');return;}body=syncPayload();}
     if(!sync.gistId){var g=await gistReq('POST',null,{description:'学习目标管理台数据同步',public:false,files:{[SYNC_FILE]:{content:body}}});sync.gistId=g.id;saveSyncCfg();}
     else{await gistReq('PATCH',sync.gistId,{files:{[SYNC_FILE]:{content:body}}});}
     showGistInfo();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#7c5cff">
+<meta name="theme-color" content="#8b5cf6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="学习管理台">
@@ -14,7 +14,7 @@
 <style>
 :root{
   --bg:#f4f5fb; --card:#ffffff; --line:#eceef5; --ink:#21222b; --muted:#8a8f9e;
-  --purple:#7c5cff; --purple-2:#9d7bff; --purple-soft:#f0ecff; --green:#22c55e;
+  --purple:#8b5cf6; --purple-2:#a78bfa; --purple-soft:#f3edff; --green:#22c55e;
   --green-soft:#e7f8ee; --red:#ef4444; --red-soft:#fdecec; --amber:#f59e0b;
   --amber-soft:#fff5e6; --cyan:#06b6d4; --cyan-soft:#e0f7fb; --radius:16px; --shadow:0 2px 14px rgba(40,40,90,.06);
 }
@@ -23,7 +23,7 @@ html,body{margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .layout{display:flex;min-height:100vh;padding-bottom:64px}
-.sidebar{display:none;width:220px;flex-shrink:0;background:linear-gradient(160deg,var(--purple),#5b3fd6);
+.sidebar{display:none;width:220px;flex-shrink:0;background:linear-gradient(160deg,var(--purple),#7c3aed);
   color:#fff;flex-direction:column;padding:22px 14px}
 .sb-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;margin-bottom:24px;padding:0 6px}
 .sb-brand svg{width:26px;height:26px}
@@ -45,7 +45,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .btn{border:none;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;
   display:inline-flex;align-items:center;gap:7px;transition:.15s;font-family:inherit}
 .btn svg{width:17px;height:17px}
-.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-2));color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.32)}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-2));color:#fff;box-shadow:0 4px 14px rgba(139,92,246,.32)}
 .btn-primary:active{transform:scale(.97)}
 .btn-ghost{background:var(--purple-soft);color:var(--purple)}
 .btn-outline{background:#fff;color:var(--ink);border:1px solid var(--line)}
@@ -211,7 +211,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .wxbox h3{margin:0 0 12px;font-size:17px;color:#222}
 .wxbox p{font-size:14px;line-height:1.6;color:#555;margin:8px 0}
 .wxsteps{text-align:left;background:#f5f5f5;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:13px;color:#333;line-height:1.8}
-.wxsteps b{color:#7c5cff}
+.wxsteps b{color:#8b5cf6}
 .wxicon{font-size:48px;margin-bottom:8px}
 .wxclose{margin-top:8px;padding:8px 16px;background:#eee;border:none;border-radius:8px;font-size:13px;cursor:pointer;color:#666}
 
@@ -392,7 +392,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
     </div>
     <div class="field"><label>总量</label><input id="gTotal" type="number" placeholder="2000"></div>
     <div class="field"><label>截止日</label><input id="gDue" type="date"></div>
-    <div class="field"><label>配色</label><input id="gColor" type="color" value="#7c5cff" style="height:44px"></div>
+    <div class="field"><label>配色</label><input id="gColor" type="color" value="#8b5cf6" style="height:44px"></div>
     <div class="field"><label>最容易拦住我的障碍（选填）</label><input id="gObstacle" placeholder="如：背了就忘"></div>
     <div class="field"><label>「如果它出现，我就……」的对策（选填）</label><input id="gCounter" placeholder="如：碎片时间复习"></div>
     <div class="sheet-actions">
@@ -502,7 +502,7 @@ function buildSample(){
   var g1=uid(),g2=uid(),g3=uid(),g4=uid();
   var rec=function(gid,date,qty,min,sup){return {id:uid(),goalId:gid,date:iso(date),qty:qty,minutes:(min||0),supplement:!!sup};};
   var goals=[
-    {id:g1,name:"背英语单词",unit:"个",total:2000,due:iso(addDays(today,40)),color:"#7c5cff",category:"general",obstacle:"背了就忘、没整块时间",counter:"碎片时间+睡前10分钟复习",done:false,created:iso(addDays(today,-9))},
+    {id:g1,name:"背英语单词",unit:"个",total:2000,due:iso(addDays(today,40)),color:"#8b5cf6",category:"general",obstacle:"背了就忘、没整块时间",counter:"碎片时间+睡前10分钟复习",done:false,created:iso(addDays(today,-9))},
     {id:g2,name:"读《人类简史》",unit:"页",total:440,due:iso(addDays(today,25)),color:"#22c55e",category:"reading",obstacle:"晚上太累容易跳过",counter:"早起通勤读20页",done:false,created:iso(addDays(today,-9))},
     {id:g3,name:"Python 入门课",unit:"节",total:60,due:iso(addDays(today,30)),color:"#f59e0b",category:"general",obstacle:"卡在练习不想动手",counter:"先照抄跑通再改",done:false,created:iso(addDays(today,-9))},
     {id:g4,name:"复盘 20 笔交易",unit:"笔",total:20,due:iso(addDays(today,21)),color:"#ef4444",category:"trading",obstacle:"复盘嫌麻烦、爱跳过",counter:"每晚固定 15 分钟过当日交易",done:false,created:iso(addDays(today,-9))}
@@ -605,7 +605,7 @@ function etaFun(g){var r7=rate7(g);if(r7==null||r7<=0)return null;var leftDays=M
 
 /* ===================== 今日主页：折叠汇总 阅读/交易/复盘 ===================== */
 var FOLD_DEFS=[
-  {cat:"reading",name:"阅读",color:"#7c5cff",icon:'<path d="M5 4h9a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 4h3v14a2 2 0 0 1-2 2" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>'},
+  {cat:"reading",name:"阅读",color:"#8b5cf6",icon:'<path d="M5 4h9a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 4h3v14a2 2 0 0 1-2 2" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>'},
   {cat:"trading",name:"交易",color:"#f59e0b",icon:'<path d="M4 18l5-6 4 3 7-9" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 21h16" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>'},
   {cat:"review",name:"复盘",color:"#22c55e",icon:'<path d="M5 4h11l3 3v13H5V4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 11h8M8 15h6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>'}
 ];
@@ -1029,7 +1029,7 @@ function openGoalModal(id,defCat){
     val_set("gColor",g.color);val_set("gObstacle",g.obstacle||"");val_set("gCounter",g.counter||"");
     val_set("gCategory",g.category||"general");
     wrap.classList.remove("hidden");
-  }else{title.textContent="新建目标";["gName","gUnit","gTotal","gObstacle","gCounter","gCategory"].forEach(function(f){val_set(f,"");});val_set("gDue",fmtDate(addDays(new Date(),30)));val_set("gColor","#7c5cff");val_set("gCategory",defCat||"general");wrap.classList.add("hidden");}
+  }else{title.textContent="新建目标";["gName","gUnit","gTotal","gObstacle","gCounter","gCategory"].forEach(function(f){val_set(f,"");});val_set("gDue",fmtDate(addDays(new Date(),30)));val_set("gColor","#8b5cf6");val_set("gCategory",defCat||"general");wrap.classList.add("hidden");}
   syncUnitChips();
   $("#goalMask").classList.add("show");
 }
@@ -1054,7 +1054,7 @@ function saveGoal(){
   var name=val("gName").trim();if(!name){toast("请填写名称","err");return;}
   var unit=val("gUnit").trim()||"次";var total=parseInt(val("gTotal"),10);if(!total||total<=0){toast("总量需为正整数","err");return;}
   var due=val("gDue")||fmtDate(addDays(new Date(),30));
-  var color=val("gColor")||"#7c5cff";var obstacle=val("gObstacle").trim();var counter=val("gCounter").trim();
+  var color=val("gColor")||"#8b5cf6";var obstacle=val("gObstacle").trim();var counter=val("gCounter").trim();
   var category=val("gCategory")||"general";
   if(editingId){var g=state.goals.find(function(x){return x.id===editingId;});g.name=name;g.unit=unit;g.total=total;g.due=due;g.color=color;g.obstacle=obstacle;g.counter=counter;g.category=category;toast("已更新","ok");}
   else{state.goals.push({id:uid(),name:name,unit:unit,total:total,due:due,color:color,obstacle:obstacle,counter:counter,category:category,done:false,created:fmtDate(new Date())});toast("已创建","ok");}

@@ -927,7 +927,7 @@ function syncEnable(){
   var gid=document.getElementById('syncGistId').value.trim();
   if(!tok){toast('请输入 Token','err');return;}
   sync.token=tok;sync.gistId=gid;sync.enabled=true;saveSyncCfg();
-  pushSync().then(function(){showConnectedUI();startAutoPull();toast('已启用并同步 ✅','ok');}).catch(function(e){toast(e.message,'err');});
+  syncNow().then(function(){showConnectedUI();startAutoPull();toast('已启用并同步 ✅','ok');}).catch(function(e){toast(e.message,'err');});
 }
 function syncDisable(){
   if(!confirm('断开后数据仍保留在本地和 Gist 中。确定断开？'))return;

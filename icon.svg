@@ -1,11 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7c5cff"/>
-      <stop offset="1" stop-color="#a78bfa"/>
+      <stop offset="0" stop-color="#2C4B8D"/>
+      <stop offset="1" stop-color="#3A61A8"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" rx="42" fill="url(#g)"/>
-  <path d="M52 70l44-22 44 22v52l-44 22-44-22V70z" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round"/>
-  <path d="M52 70l44 22 44-22M96 92v52" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round"/>
+  <rect width="192" height="192" rx="44" fill="url(#g)"/>
+  <!-- 外圈：有终点的进度环（72%），底轨半透明白 -->
+  <circle cx="96" cy="96" r="55" fill="none" stroke="#fff" stroke-opacity=".26" stroke-width="10"/>
+  <circle cx="96" cy="96" r="55" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"
+          stroke-dasharray="249 346" transform="rotate(-90 96 96)"/>
+  <!-- 中间：打开的书（中缝留出底色做书脊） -->
+  <path d="M93 79c-8-4-19-2.5-30 4v34.5c11-4 22-2.5 30 2z" fill="#fff"/>
+  <path d="M99 79c8-4 19-2.5 30 4v34.5c-11-4-22-2.5-30 2z" fill="#fff"/>
 </svg>

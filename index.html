@@ -223,23 +223,120 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .pwa-prompt-text small{color:var(--muted);font-size:12px}
 .pwa-btn{padding:8px 14px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .pwa-btn-ghost{background:transparent;color:var(--muted);padding:6px 8px;font-size:18px;line-height:1}
+/* ============================================================
+   v45 · 商务黑白皮肤层 —— 方案 A「纯白极简 Pure Mono」
+   全白底 + 纯黑实心按钮，零渐变零投影，靠 1px 细线分层。
+   本层独立成块，整块删除即可完全还原默认外观。
+
+   主色策略：所有「主色件」（按钮 / 分类图标 / logo / 目标色条 / 进度条 /
+   输入框聚焦框 / 选中态 / 侧栏）一律引用 var(--purple) 而非写死黑色 ——
+   这样默认呈现商务黑，用户在设置页改色时仍能全站联动，改色能力不被锁死。
+   --purple 由首屏脚本写入内联样式（默认 #111111），此处只做无 !important 的兜底。
+   ============================================================ */
+:root{
+  --bg:#FFFFFF !important; --card:#FFFFFF !important; --line:#E6E6E6 !important;
+  --ink:#0A0A0A !important; --muted:#8C8C8C !important;
+  /* 主色兜底：刻意不加 !important —— 首屏脚本的内联值（含用户自选色）仍可覆盖它，
+     即使 JS 未执行也能保证是黑白。 */
+  --purple:#111111; --purple-2:#4A4A4A; --purple-soft:#F4F4F4;
+  --purple-deep:#000000; --purple-shadow:rgba(0,0,0,.05);
+  --green:#2F6B4F !important; --green-soft:#F1F5F2 !important;
+  --amber:#8A6A1F !important; --amber-soft:#F8F5EE !important;
+  --red:#A32219 !important; --red-soft:#FBF1F0 !important;
+  --cyan:#4A5568 !important; --cyan-soft:#F2F4F7 !important;
+  --radius:8px !important; --shadow:none !important;
+}
+/* 顶栏 / 底栏：纯白 + 1px 细线，去掉毛玻璃 */
+.topbar{background:#FFFFFF !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+  border-bottom:1px solid #E6E6E6 !important}
+.tabs-bottom{background:#FFFFFF !important;border-top:1px solid #E6E6E6 !important;box-shadow:none !important}
+.tabs-bottom .nav-btn{color:#8C8C8C !important}
+/* 桌面端侧栏：去掉渐变 */
+.sidebar{background:var(--purple) !important}
+/* 按钮：一律去渐变去投影 */
+.btn{border-radius:8px !important}
+.btn-primary{background:var(--purple) !important;color:#FFFFFF !important;box-shadow:none !important}
+.btn-primary:active{transform:none !important}
+.btn-ghost{background:#F4F4F4 !important;color:#111111 !important}
+.btn-outline{background:#FFFFFF !important;border:1px solid #E6E6E6 !important}
+.btn-new-goal{letter-spacing:.5px !important;font-weight:700 !important;border-radius:8px !important}
+/* 卡片 / 折叠区：只靠 1px 描边分层 */
+.card,.goal-card,.fold{border-radius:8px !important;box-shadow:none !important;
+  border:1px solid #E6E6E6 !important}
+/* 分类图标统一单色（原为 JS 里硬编码的紫/橙/绿） */
+.fold .f-ico{background:var(--purple) !important;color:#FFFFFF !important;border-radius:7px !important}
+.fold .f-ico svg{stroke-width:1.9}
+/* 折叠区徽章 */
+.fold .f-badge{background:#F4F4F4 !important;color:#4A4A4A !important;
+  font-weight:700 !important;border-radius:6px !important}
+/* 目标左侧色条统一（原为每个目标各自的彩色） */
+.goal-card .accent{background:var(--purple) !important;width:3px !important}
+/* logo */
+.brand .logo{background:var(--purple) !important;border-radius:7px !important}
+/* 标签 chip：改描边式，不再铺彩色底 */
+.chip{background:transparent !important;border:1px solid #E6E6E6 !important;
+  color:#8C8C8C !important;border-radius:6px !important}
+.chip.p{background:#F1F5F2 !important;border-color:#F1F5F2 !important;color:#2F6B4F !important}
+.chip.over{background:#FBF1F0 !important;border-color:#FBF1F0 !important;color:#A32219 !important}
+.chip.rest{background:#F8F5EE !important;border-color:#F8F5EE !important;color:#8A6A1F !important}
+/* 进度条 / 环形进度（只改配色，不改尺寸以保持布局） */
+.bar{background:#F4F4F4 !important;border-radius:3px !important}
+.bar>i{background:var(--purple) !important;border-radius:3px !important}
+.ring circle:first-of-type{stroke:#F4F4F4 !important}
+.ring circle:last-of-type{stroke:var(--purple) !important}
+/* 输入框 */
+.field input,.field textarea,.field select,.checkin input,.row2 input{
+  background:#FFFFFF !important;border:1px solid #E6E6E6 !important;border-radius:8px !important}
+.field input:focus,.field textarea:focus,.checkin input:focus{
+  border-color:var(--purple) !important;box-shadow:0 0 0 3px rgba(0,0,0,.05) !important}
+/* 预案块 / 计数块（原底色与卡片同白，会看不见） */
+.counter{background:#F4F4F4 !important;border-radius:8px !important}
+/* 已完成折叠区 */
+.done-fold{border-color:#E6E6E6 !important}
+.done-fold>summary{background:#F4F4F4 !important}
+.done-card{background:#FFFFFF !important}
+/* 弹层 */
+.sheet{border-radius:14px 14px 0 0 !important}
+.unit-chip{border:1px solid #E6E6E6 !important;background:#FFFFFF !important;
+  color:#0A0A0A !important;border-radius:8px !important}
+.unit-chip.active{background:var(--purple) !important;color:#FFFFFF !important;
+  border-color:var(--purple) !important}
+/* 分隔线 / 列表 */
+.rec-item{border-bottom:1px solid #E6E6E6 !important}
+/* 绿色便签卡（同步卡）收敛成描边卡 */
+.gh-sync-card{border-left:3px solid var(--purple) !important;background:#FFFFFF !important;
+  border:1px solid #E6E6E6 !important}
+.gh-sync-card::before{display:none !important}
+/* 设置页其它硬编码彩色残留一并收敛：
+   安装按钮原本是绿渐变、底托是浅绿，与黑白体系冲突 */
+.gh-btn{background:var(--purple) !important;color:#FFFFFF !important;
+  box-shadow:none !important;border-radius:8px !important}
+.gh-btn:active{transform:none !important}
+.gh-shield{background:#F4F4F4 !important;border:1px solid #E6E6E6 !important}
+.gh-status-row{background:#F4F4F4 !important;border:1px solid #E6E6E6 !important}
+.gh-input{border:1px solid var(--line) !important;border-radius:8px !important}
+.gh-input:focus{border-color:var(--purple) !important;box-shadow:0 0 0 3px rgba(0,0,0,.05) !important}
+.gh-expiry-warn{background:#FBF1F0 !important;border:1px solid #E6E6E6 !important;
+  color:#A32219 !important;border-radius:8px !important}
+.toast{border-radius:8px !important}
+/* ==================== 皮肤层结束 ==================== */
 </style>
 <script>
-/* 主体颜色：解析期同步应用，避免首屏闪烁；默认匹配工作台靛蓝主题。
+/* 主体颜色：解析期同步应用，避免首屏闪烁；默认商务黑（配合 v45 黑白皮肤层）。
    仅改 --purple 一组变量即可重染整个应用（侧边栏/按钮/进度条/导航/图标等）。 */
 (function(){
   function hexToRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');var n=parseInt(h,16);if(isNaN(n))return null;return[(n>>16)&255,(n>>8)&255,n&255];}
   function rgbToHex(r){return '#'+r.map(function(x){var s=Math.max(0,Math.min(255,Math.round(x))).toString(16);return s.length<2?'0'+s:s;}).join('');}
   function mix(a,b,t){return a.map(function(v,i){return v+(b[i]-v)*t;});}
   window.applyAccent=function(base){
-    base=(base||'#2C4B8D').trim();
-    var rgb=hexToRgb(base);if(!rgb)rgb=hexToRgb('#2C4B8D');
+    base=(base||'#111111').trim();
+    var rgb=hexToRgb(base);if(!rgb)rgb=hexToRgb('#111111');
     var soft=mix(rgb,[255,255,255],0.88),p2=mix(rgb,[255,255,255],0.20),deep=mix(rgb,[0,0,0],0.18);
     var s=document.documentElement.style;
     s.setProperty('--purple',base);s.setProperty('--purple-2',rgbToHex(p2));s.setProperty('--purple-soft',rgbToHex(soft));s.setProperty('--purple-deep',rgbToHex(deep));s.setProperty('--purple-shadow','rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',.28)');
     var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=base;
   };
-  try{var saved=localStorage.getItem('lgt_accent');window.applyAccent(saved||'#2C4B8D');}catch(e){window.applyAccent('#2C4B8D');}
+  try{var saved=localStorage.getItem('lgt_accent');window.applyAccent(saved||'#111111');}catch(e){window.applyAccent('#111111');}
 })();
 </script>
 </head>
@@ -386,7 +483,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
         <!-- 主体颜色 -->
         <div class="card" id="accentCard" style="margin-top:16px">
           <div class="gh-sync-header"><span class="gh-shield">🎨</span><b>主体颜色</b></div>
-          <p class="gh-desc">学习台默认配色已改为与你工作台（靛蓝石墨）一致。可随时切换其他颜色，或一键匹配工作台当前主题色。配色仅影响学习台本身（侧边栏、按钮、进度条、导航等），不会改动各目标的独立标签色。</p>
+          <p class="gh-desc">当前为商务黑白主题（纯白底 + 纯黑按钮），即学习台的默认观感。可随时切换其他颜色，或一键匹配工作台当前主题色。配色仅影响学习台本身（侧边栏、按钮、进度条、图标、导航等），不会改动各目标的独立标签色与警示色。</p>
           <div id="accentPresets" style="display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px"></div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <label class="gh-label" style="margin:0">自定义</label>
@@ -1252,6 +1349,7 @@ function toast(msg,type){var t=$("#toast");if(!t)return;t.textContent=msg;t.clas
 
 /* ===================== 主体颜色 ===================== */
 var ACCENT_PRESETS=[
+  {name:'商务黑',hex:'#111111'},
   {name:'工作台靛蓝',hex:'#2C4B8D'},
   {name:'原始紫',hex:'#8b5cf6'},
   {name:'青蓝',hex:'#0ea5e9'},
@@ -1260,7 +1358,7 @@ var ACCENT_PRESETS=[
   {name:'玫红',hex:'#db2777'}
 ];
 var ACCENT_KEY='lgt_accent';
-var ACCENT_DEFAULT='#2C4B8D';
+var ACCENT_DEFAULT='#111111';
 function buildAccentUI(){
   var box=document.getElementById('accentPresets');if(!box)return;
   box.innerHTML='';
@@ -1286,7 +1384,7 @@ function setAccent(hex){
 function matchWorkbenchAccent(){
   var wb=null;try{wb=localStorage.getItem('wb_accent');}catch(e){}
   if(wb){setAccent(wb);var n=document.getElementById('accentNote');if(n)n.textContent='已匹配工作台主题色：'+wb+'（来自本机工作台本地记录）';}
-  else{setAccent(ACCENT_DEFAULT);var n=document.getElementById('accentNote');if(n)n.textContent='未检测到工作台本地记录，已应用工作台默认靛蓝 #2C4B8D（请先在浏览器中打开一次工作台，它会把主题色写入本机共享存储）。';}
+  else{setAccent(ACCENT_DEFAULT);var n=document.getElementById('accentNote');if(n)n.textContent='未检测到工作台本地记录，已应用默认商务黑 '+ACCENT_DEFAULT+'（请先在浏览器中打开一次工作台，它会把主题色写入本机共享存储）。';}
 }
 function resetAccent(){setAccent(ACCENT_DEFAULT);}
 

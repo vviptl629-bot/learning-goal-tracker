@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#8b5cf6">
+<meta name="theme-color" content="#2C4B8D">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="学习管理台">
@@ -14,7 +14,7 @@
 <style>
 :root{
   --bg:#f4f5fb; --card:#ffffff; --line:#eceef5; --ink:#21222b; --muted:#8a8f9e;
-  --purple:#8b5cf6; --purple-2:#a78bfa; --purple-soft:#f3edff; --green:#22c55e;
+  --purple:#2C4B8D; --purple-2:#566FA4; --purple-soft:#E6E9F1; --purple-deep:#243E74; --purple-shadow:rgba(44,75,141,.28); --green:#22c55e;
   --green-soft:#e7f8ee; --red:#ef4444; --red-soft:#fdecec; --amber:#f59e0b;
   --amber-soft:#fff5e6; --cyan:#06b6d4; --cyan-soft:#e0f7fb; --radius:16px; --shadow:0 2px 14px rgba(40,40,90,.06);
 }
@@ -23,7 +23,7 @@ html,body{margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .layout{display:flex;min-height:100vh;padding-bottom:64px}
-.sidebar{display:none;width:220px;flex-shrink:0;background:linear-gradient(160deg,var(--purple),#7c3aed);
+.sidebar{display:none;width:220px;flex-shrink:0;background:linear-gradient(160deg,var(--purple),var(--purple-deep));
   color:#fff;flex-direction:column;padding:22px 14px}
 .sb-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;margin-bottom:24px;padding:0 6px}
 .sb-brand svg{width:26px;height:26px}
@@ -45,7 +45,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .btn{border:none;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;
   display:inline-flex;align-items:center;gap:7px;transition:.15s;font-family:inherit}
 .btn svg{width:17px;height:17px}
-.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-2));color:#fff;box-shadow:0 4px 14px rgba(139,92,246,.32)}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-2));color:#fff;box-shadow:0 4px 14px var(--purple-shadow)}
 .btn-primary:active{transform:scale(.97)}
 .btn-ghost{background:var(--purple-soft);color:var(--purple)}
 .btn-outline{background:#fff;color:var(--ink);border:1px solid var(--line)}
@@ -211,7 +211,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .wxbox h3{margin:0 0 12px;font-size:17px;color:#222}
 .wxbox p{font-size:14px;line-height:1.6;color:#555;margin:8px 0}
 .wxsteps{text-align:left;background:#f5f5f5;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:13px;color:#333;line-height:1.8}
-.wxsteps b{color:#8b5cf6}
+.wxsteps b{color:var(--purple)}
 .wxicon{font-size:48px;margin-bottom:8px}
 .wxclose{margin-top:8px;padding:8px 16px;background:#eee;border:none;border-radius:8px;font-size:13px;cursor:pointer;color:#666}
 
@@ -224,6 +224,24 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .pwa-btn{padding:8px 14px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .pwa-btn-ghost{background:transparent;color:var(--muted);padding:6px 8px;font-size:18px;line-height:1}
 </style>
+<script>
+/* 主体颜色：解析期同步应用，避免首屏闪烁；默认匹配工作台靛蓝主题。
+   仅改 --purple 一组变量即可重染整个应用（侧边栏/按钮/进度条/导航/图标等）。 */
+(function(){
+  function hexToRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');var n=parseInt(h,16);if(isNaN(n))return null;return[(n>>16)&255,(n>>8)&255,n&255];}
+  function rgbToHex(r){return '#'+r.map(function(x){var s=Math.max(0,Math.min(255,Math.round(x))).toString(16);return s.length<2?'0'+s:s;}).join('');}
+  function mix(a,b,t){return a.map(function(v,i){return v+(b[i]-v)*t;});}
+  window.applyAccent=function(base){
+    base=(base||'#2C4B8D').trim();
+    var rgb=hexToRgb(base);if(!rgb)rgb=hexToRgb('#2C4B8D');
+    var soft=mix(rgb,[255,255,255],0.88),p2=mix(rgb,[255,255,255],0.20),deep=mix(rgb,[0,0,0],0.18);
+    var s=document.documentElement.style;
+    s.setProperty('--purple',base);s.setProperty('--purple-2',rgbToHex(p2));s.setProperty('--purple-soft',rgbToHex(soft));s.setProperty('--purple-deep',rgbToHex(deep));s.setProperty('--purple-shadow','rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',.28)');
+    var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=base;
+  };
+  try{var saved=localStorage.getItem('lgt_accent');window.applyAccent(saved||'#2C4B8D');}catch(e){window.applyAccent('#2C4B8D');}
+})();
+</script>
 </head>
 <body>
 <script>
@@ -365,6 +383,20 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
           <p class="mini" id="pwaHint" style="margin-top:8px;color:var(--muted)"></p>
         </div>
 
+        <!-- 主体颜色 -->
+        <div class="card" id="accentCard" style="margin-top:16px">
+          <div class="gh-sync-header"><span class="gh-shield">🎨</span><b>主体颜色</b></div>
+          <p class="gh-desc">学习台默认配色已改为与你工作台（靛蓝石墨）一致。可随时切换其他颜色，或一键匹配工作台当前主题色。配色仅影响学习台本身（侧边栏、按钮、进度条、导航等），不会改动各目标的独立标签色。</p>
+          <div id="accentPresets" style="display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px"></div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <label class="gh-label" style="margin:0">自定义</label>
+            <input type="color" id="accentCustom" style="width:44px;height:34px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;padding:2px" oninput="setAccent(this.value)" onchange="setAccent(this.value)">
+            <button class="btn btn-ghost btn-sm" onclick="matchWorkbenchAccent()" style="color:var(--purple)">🔗 匹配工作台（自动）</button>
+            <button class="btn btn-outline btn-sm" onclick="resetAccent()">恢复默认</button>
+          </div>
+          <p class="mini" id="accentNote" style="margin-top:8px"></p>
+        </div>
+
       </section>
     </div>
   </div>
@@ -395,7 +427,7 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
     </div>
     <div class="field"><label>总量</label><input id="gTotal" type="number" placeholder="2000"></div>
     <div class="field"><label>截止日</label><input id="gDue" type="date"></div>
-    <div class="field"><label>配色</label><input id="gColor" type="color" value="#8b5cf6" style="height:44px"></div>
+    <div class="field"><label>配色</label><input id="gColor" type="color" value="#2C4B8D" style="height:44px"></div>
     <div class="field"><label>最容易拦住我的障碍（选填）</label><input id="gObstacle" placeholder="如：背了就忘"></div>
     <div class="field"><label>「如果它出现，我就……」的对策（选填）</label><input id="gCounter" placeholder="如：碎片时间复习"></div>
     <div class="sheet-actions">
@@ -505,7 +537,7 @@ function buildSample(){
   var g1=uid(),g2=uid(),g3=uid(),g4=uid();
   var rec=function(gid,date,qty,min,sup){return {id:uid(),goalId:gid,date:iso(date),qty:qty,minutes:(min||0),supplement:!!sup};};
   var goals=[
-    {id:g1,name:"背英语单词",unit:"个",total:2000,due:iso(addDays(today,40)),color:"#8b5cf6",category:"general",obstacle:"背了就忘、没整块时间",counter:"碎片时间+睡前10分钟复习",done:false,created:iso(addDays(today,-9))},
+    {id:g1,name:"背英语单词",unit:"个",total:2000,due:iso(addDays(today,40)),color:"#2C4B8D",category:"general",obstacle:"背了就忘、没整块时间",counter:"碎片时间+睡前10分钟复习",done:false,created:iso(addDays(today,-9))},
     {id:g2,name:"读《人类简史》",unit:"页",total:440,due:iso(addDays(today,25)),color:"#22c55e",category:"reading",obstacle:"晚上太累容易跳过",counter:"早起通勤读20页",done:false,created:iso(addDays(today,-9))},
     {id:g3,name:"Python 入门课",unit:"节",total:60,due:iso(addDays(today,30)),color:"#f59e0b",category:"general",obstacle:"卡在练习不想动手",counter:"先照抄跑通再改",done:false,created:iso(addDays(today,-9))},
     {id:g4,name:"复盘 20 笔交易",unit:"笔",total:20,due:iso(addDays(today,21)),color:"#ef4444",category:"trading",obstacle:"复盘嫌麻烦、爱跳过",counter:"每晚固定 15 分钟过当日交易",done:false,created:iso(addDays(today,-9))}
@@ -1062,7 +1094,7 @@ function openGoalModal(id,defCat){
     val_set("gColor",g.color);val_set("gObstacle",g.obstacle||"");val_set("gCounter",g.counter||"");
     val_set("gCategory",g.category||"general");
     wrap.classList.remove("hidden");
-  }else{title.textContent="新建目标";["gName","gUnit","gTotal","gObstacle","gCounter","gCategory"].forEach(function(f){val_set(f,"");});val_set("gDue",fmtDate(addDays(new Date(),30)));val_set("gColor","#8b5cf6");val_set("gCategory",defCat||"general");wrap.classList.add("hidden");}
+  }else{title.textContent="新建目标";["gName","gUnit","gTotal","gObstacle","gCounter","gCategory"].forEach(function(f){val_set(f,"");});val_set("gDue",fmtDate(addDays(new Date(),30)));val_set("gColor","#2C4B8D");val_set("gCategory",defCat||"general");wrap.classList.add("hidden");}
   syncUnitChips();
   $("#goalMask").classList.add("show");
 }
@@ -1087,7 +1119,7 @@ function saveGoal(){
   var name=val("gName").trim();if(!name){toast("请填写名称","err");return;}
   var unit=val("gUnit").trim()||"次";var total=parseInt(val("gTotal"),10);if(!total||total<=0){toast("总量需为正整数","err");return;}
   var due=val("gDue")||fmtDate(addDays(new Date(),30));
-  var color=val("gColor")||"#8b5cf6";var obstacle=val("gObstacle").trim();var counter=val("gCounter").trim();
+  var color=val("gColor")||"#2C4B8D";var obstacle=val("gObstacle").trim();var counter=val("gCounter").trim();
   var category=val("gCategory")||"general";
   if(editingId){var g=state.goals.find(function(x){return x.id===editingId;});g.name=name;g.unit=unit;g.total=total;g.due=due;g.color=color;g.obstacle=obstacle;g.counter=counter;g.category=category;toast("已更新","ok");}
   else{state.goals.push({id:uid(),name:name,unit:unit,total:total,due:due,color:color,obstacle:obstacle,counter:counter,category:category,done:false,created:fmtDate(new Date())});toast("已创建","ok");}
@@ -1218,8 +1250,50 @@ function reloadData(showToast){
 var toastTimer=null;
 function toast(msg,type){var t=$("#toast");if(!t)return;t.textContent=msg;t.className="toast show"+(type?" "+type:"");clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.className="toast";},2200);}
 
+/* ===================== 主体颜色 ===================== */
+var ACCENT_PRESETS=[
+  {name:'工作台靛蓝',hex:'#2C4B8D'},
+  {name:'原始紫',hex:'#8b5cf6'},
+  {name:'青蓝',hex:'#0ea5e9'},
+  {name:'墨绿',hex:'#16a34a'},
+  {name:'暖橙',hex:'#ea580c'},
+  {name:'玫红',hex:'#db2777'}
+];
+var ACCENT_KEY='lgt_accent';
+var ACCENT_DEFAULT='#2C4B8D';
+function buildAccentUI(){
+  var box=document.getElementById('accentPresets');if(!box)return;
+  box.innerHTML='';
+  ACCENT_PRESETS.forEach(function(p){
+    var b=document.createElement('button');
+    b.type='button';b.className='accent-swatch';
+    b.style.cssText='width:38px;height:38px;border-radius:10px;border:2px solid var(--line);cursor:pointer;background:'+p.hex;
+    b.title=p.name;b.setAttribute('data-hex',p.hex);
+    b.onclick=function(){setAccent(p.hex);};
+    box.appendChild(b);
+  });
+}
+function currentAccent(){try{return localStorage.getItem(ACCENT_KEY)||ACCENT_DEFAULT;}catch(e){return ACCENT_DEFAULT;}}
+function setAccent(hex){
+  if(typeof window.applyAccent==='function')window.applyAccent(hex);
+  try{localStorage.setItem(ACCENT_KEY,hex);}catch(e){}
+  document.querySelectorAll('#accentPresets .accent-swatch').forEach(function(s){
+    s.style.borderColor=(s.getAttribute('data-hex').toLowerCase()===hex.toLowerCase())?'var(--purple)':'var(--line)';
+  });
+  var ci=document.getElementById('accentCustom');if(ci)ci.value=hex;
+  var note=document.getElementById('accentNote');if(note)note.textContent='当前主体色：'+hex;
+}
+function matchWorkbenchAccent(){
+  var wb=null;try{wb=localStorage.getItem('wb_accent');}catch(e){}
+  if(wb){setAccent(wb);var n=document.getElementById('accentNote');if(n)n.textContent='已匹配工作台主题色：'+wb+'（来自本机工作台本地记录）';}
+  else{setAccent(ACCENT_DEFAULT);var n=document.getElementById('accentNote');if(n)n.textContent='未检测到工作台本地记录，已应用工作台默认靛蓝 #2C4B8D（请先在浏览器中打开一次工作台，它会把主题色写入本机共享存储）。';}
+}
+function resetAccent(){setAccent(ACCENT_DEFAULT);}
+
 /* ===================== Boot ===================== */
 try{
+  buildAccentUI();
+  setAccent(currentAccent());
   renderAll();
   syncInit();          // 恢复 Gist 同步连接状态
   ensureDockVisible(); // 兜底：手机端强制显示底部 dock

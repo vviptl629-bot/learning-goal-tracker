@@ -1,6 +1,6 @@
 // 学习目标管理台 Service Worker —— 安全版：只缓存图标，绝不缓存 HTML/页面
 // 设计原则：导航请求永远走网络，避免旧空白页被缓存导致白屏复发。
-const CACHE = "lstm-icon-v1";
+const CACHE = "lstm-icon-v2";
 const ICON = "icon.svg";
 
 self.addEventListener("install", e => {

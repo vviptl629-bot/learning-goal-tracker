@@ -52,7 +52,6 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .btn-block{width:100%;justify-content:center;margin-top:14px;padding:16px 18px;font-size:16px;letter-spacing:.3px}
 /* 新建目标主按钮：去图标、纯文字居中、醒目大按钮 */
 .btn-new-goal{padding:18px 20px!important;font-size:17.5px!important;font-weight:700;letter-spacing:1.5px;border-radius:14px;gap:0;text-align:center}
-.fab-bottom{position:relative;margin-top:18px}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:16px;border:1px solid var(--line)}
 .banner{border-radius:14px;padding:11px 13px;margin-bottom:12px;display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.5}
 .banner svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
@@ -94,7 +93,6 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .field textarea{resize:vertical;min-height:62px}
 .sheet-actions{display:flex;gap:10px;margin-top:6px}
 .sheet-actions .btn{flex:1;justify-content:center}
-.kb-grid{display:grid;grid-template-columns:1fr;gap:14px}
 .ring-wrap{display:flex;align-items:center;gap:14px}
 .ring{position:relative;width:74px;height:74px;flex-shrink:0}
 .ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
@@ -148,8 +146,6 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 @media(min-width:768px){
   .sidebar{display:flex}
   .content{padding:22px;padding-bottom:22px}
-  .fab-bottom{position:static}
-  .kb-grid{grid-template-columns:1fr 1fr}
 }
 /* 只有真正 PC（≥1024px）才用侧边栏并隐藏底部 dock；手机/平板一律显示 dock */
 @media(min-width:1024px){
@@ -172,15 +168,11 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .gh-btn:active{transform:scale(.97)}
 .gh-status-row{display:flex;align-items:center;gap:7px;margin-bottom:8px;padding:8px 10px;background:#f0fdf4;border-radius:8px;border:1px solid #d1fae5}
 .gh-stats{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.gh-progress{text-align:center;padding:10px;color:var(--amber);font-size:13px}
 .gh-diag{margin-top:10px;background:#0f1117;color:#c8f7c5;font:12px/1.6 ui-monospace,Menlo,Consolas,monospace;padding:10px 12px;border-radius:8px;white-space:pre-wrap;word-break:break-all;max-height:240px;overflow:auto}
-.gh-expiry-warn{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:#fff4f4;border:1px solid #ffc9c9;color:#c0392b;font-size:13px;line-height:1.5}
 .sync-status{font-size:12.5px;margin-top:8px;min-height:16px;line-height:1.5}
 .sync-status.ok{color:var(--green)}
 .sync-status.warn{color:#d97706}
 .sync-status.err{color:#ef4444}
-.gh-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-@media(min-width:1024px){.kb-grid{grid-template-columns:1fr 1fr 1fr}}
 /* 每日记录 */
 .j-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:560px){.j-grid{grid-template-columns:1fr}}
@@ -316,8 +308,6 @@ h2.sec{font-size:18px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
 .gh-status-row{background:#F4F4F4 !important;border:1px solid #E6E6E6 !important}
 .gh-input{border:1px solid var(--line) !important;border-radius:8px !important}
 .gh-input:focus{border-color:var(--purple) !important;box-shadow:0 0 0 3px rgba(0,0,0,.05) !important}
-.gh-expiry-warn{background:#FBF1F0 !important;border:1px solid #E6E6E6 !important;
-  color:#A32219 !important;border-radius:8px !important}
 .toast{border-radius:8px !important}
 /* ==================== 皮肤层结束 ==================== */
 </style>
